@@ -1,7 +1,7 @@
 name: Mi Primer Pipeline CI
 
 # 1. EL DISPARADOR (Trigger / Webhook)
-# Esto le dice al robot: "Despierta cada vez que Octavio haga un push a la rama main"
+# Esto le dice al robot: "Despierta cada vez que haga un push a la rama main"
 on:
   push:
     branches: [ "main" ]
