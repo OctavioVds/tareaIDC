@@ -1,0 +1,36 @@
+name: Mi Primer Pipeline CI
+
+# 1. EL DISPARADOR (Trigger / Webhook)
+# Esto le dice al robot: "Despierta cada vez que Octavio haga un push a la rama main"
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  construir-y-probar:
+    runs-on: ubuntu-latest # El robot usará una compu virtual con Linux
+
+    steps:
+    # 2. CONEXIÓN CON EL REPO
+    # El robot descarga tu código de GitHub a su compu virtual
+    - name: Descargar el código
+      uses: actions/checkout@v3
+
+    # Configuramos Python
+    - name: Instalar Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    # 3. ETAPA DE COMPILACIÓN
+    # El robot instala las dependencias de tu requirements.txt
+    - name: Instalar dependencias
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # 4. ETAPA DE PRUEBAS Y REPORTE
+    # El robot corre las pruebas unitarias y genera un archivo JUnit
+    - name: Correr pruebas unitarias
+      run: |
+        pytest test_main.py --junitxml=reporte_pruebas.xml
